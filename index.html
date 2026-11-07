@@ -10,17 +10,17 @@
 <title>Cards</title>
 <meta name="apple-mobile-web-app-title" content="Cards">
 <style>
-:root{--bg:#1c1c1e;--chip:rgba(255,255,255,.14);--fg:#fff;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px);--vh:100vh;--bb:100vh;--bar:calc(60px + var(--sb));--m:max(calc(var(--st) + 16px),calc(var(--bar) + 8px));--cw:min(calc(100vw - 16px),calc((var(--vh) - 2*var(--m))/1.586))}
+:root{--bg:#1c1c1e;--chip:rgba(255,255,255,.14);--fg:#fff;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px);--vh:100vh;--bb:100vh;--bar:calc(44px + var(--sb));--m:max(calc(var(--st) + 16px),calc(var(--bar) + 8px));--cw:min(calc(100vw - 16px),calc((var(--bb) - var(--bar) - var(--st) - 32px)/1.586))}
 @supports (height:100dvh){:root{--vh:100dvh;--bb:100dvh}}
 @media (prefers-color-scheme:dark){:root{--bg:#1c1c1e}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);overflow:hidden;overscroll-behavior:none;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;touch-action:manipulation}
 .logo{position:fixed;left:0;top:0;z-index:0;pointer-events:none;will-change:transform;opacity:.32}
 .logo img{display:block;width:100%;height:auto}
-#track{position:fixed;left:0;right:0;top:0;height:var(--vh);z-index:1;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+#track{position:fixed;left:0;right:0;top:0;height:calc(var(--bb) - var(--bar));padding-top:var(--st);z-index:1;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
 #track::-webkit-scrollbar{display:none}
 .slide{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center;perspective:1400px}
-.card{position:relative;width:var(--cw);height:calc(var(--cw)*1.586);transform-style:preserve-3d;transition:transform .8s cubic-bezier(.4,.1,.2,1);cursor:pointer}
+.card{position:relative;width:var(--cw);height:calc(var(--cw)*1.586);transform-style:preserve-3d;transition:transform .4s cubic-bezier(.4,.1,.2,1);cursor:pointer}
 .card.flipped{transform:rotateY(180deg)}
 .face{position:absolute;inset:0;border-radius:calc(var(--cw)*.04);overflow:hidden;background:#fff;-webkit-backface-visibility:hidden;backface-visibility:hidden;container-type:size}
 .face.back{transform:rotateY(180deg)}
@@ -151,7 +151,7 @@ input[type=file]{display:none}
   logos.forEach(function(l){l.firstElementChild.src=src;});
   var cfg=[{sp:24,a:.8,x:.1,y:.1},{sp:20,a:2.3,x:.7,y:.2},{sp:26,a:4.1,x:.2,y:.45},{sp:22,a:5.4,x:.8,y:.55},{sp:25,a:1.5,x:.35,y:.8},{sp:21,a:3.5,x:.85,y:.92}];
   var B=logos.map(function(l,i){var c=cfg[i];return {l:l,sp:c.sp,vx:Math.cos(c.a),vy:Math.sin(c.a),fx:c.x,fy:c.y,x:null,y:null,w:0,h:0}});
-  function size(){W=document.documentElement.clientWidth;H=Math.max(innerHeight,document.documentElement.clientHeight,parseFloat(document.documentElement.style.getPropertyValue('--vh'))||0);B.forEach(function(b){b.l.style.width=Math.round(W*.185)+'px';b.w=b.l.offsetWidth;b.h=b.l.offsetHeight;if(b.x===null){b.x=b.fx*(W-b.w);b.y=b.fy*(H-b.h)}b.x=Math.min(b.x,W-b.w);b.y=Math.min(b.y,H-b.h)})}
+  function size(){W=document.documentElement.clientWidth;H=parseFloat(document.documentElement.style.getPropertyValue('--bb'))||innerHeight;B.forEach(function(b){b.l.style.width=Math.round(W*.185)+'px';b.w=b.l.offsetWidth;b.h=b.l.offsetHeight;if(b.x===null){b.x=b.fx*(W-b.w);b.y=b.fy*(H-b.h)}b.x=Math.min(b.x,W-b.w);b.y=Math.min(b.y,H-b.h)})}
   size();addEventListener('resize',size);
   logos[0].firstElementChild.addEventListener('load',size);
   function tick(t){
