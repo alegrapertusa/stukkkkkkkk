@@ -10,8 +10,8 @@
 <title>Cards</title>
 <meta name="apple-mobile-web-app-title" content="Cards">
 <style>
-:root{--bg:#1c1c1e;--chip:rgba(255,255,255,.14);--fg:#fff;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px);--vh:100vh;--bar:calc(60px + var(--sb));--m:max(calc(var(--st) + 16px),calc(var(--bar) + 8px));--cw:min(calc(100vw - 16px),calc((var(--vh) - 2*var(--m))/1.586))}
-@supports (height:100dvh){:root{--vh:100dvh}}
+:root{--bg:#1c1c1e;--chip:rgba(255,255,255,.14);--fg:#fff;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px);--vh:100vh;--bb:100vh;--bar:calc(60px + var(--sb));--m:max(calc(var(--st) + 16px),calc(var(--bar) + 8px));--cw:min(calc(100vw - 16px),calc((var(--vh) - 2*var(--m))/1.586))}
+@supports (height:100dvh){:root{--vh:100dvh;--bb:100dvh}}
 @media (prefers-color-scheme:dark){:root{--bg:#1c1c1e}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);overflow:hidden;overscroll-behavior:none;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;touch-action:manipulation}
@@ -31,7 +31,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);overflow:hid
 .ph b{font-size:18px;color:#222}
 .ph button{font:inherit;font-size:15px;border:0;border-radius:999px;background:#111;color:#fff;padding:10px 20px}
 .has .ph{display:none}
-#bar{position:fixed;left:0;right:0;top:calc(var(--vh) - var(--bar));height:var(--bar);background:var(--bg);padding:0 14px env(safe-area-inset-bottom,0px);z-index:3;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+#bar{position:fixed;left:0;right:0;top:calc(var(--bb) - var(--bar));height:var(--bar);background:var(--bg);padding:0 14px env(safe-area-inset-bottom,0px);z-index:3;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 #bar .l{justify-self:start}#bar .r{justify-self:end;display:flex;gap:6px}
 .ib{background:none;border:0;color:#fff;width:42px;height:42px;display:grid;place-items:center;padding:0;opacity:.9}
 .ib svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -63,7 +63,7 @@ input[type=file]{display:none}
 
 <script>
 (function(){
-  function setVh(){var h=innerHeight;if(innerHeight>innerWidth&&(navigator.standalone||matchMedia('(display-mode:standalone)').matches))h=Math.max(h,screen.height);document.documentElement.style.setProperty('--vh',h+'px')}
+  function setVh(){var s=document.documentElement.style,h=innerHeight;if(innerHeight>innerWidth&&(navigator.standalone||matchMedia('(display-mode:standalone)').matches))h=Math.max(h,screen.height);s.setProperty('--vh',h+'px');s.setProperty('--bb',Math.min(h,innerHeight)+'px');s.setProperty('--sb',h>innerHeight+20?'0px':'env(safe-area-inset-bottom,0px)')}
   setVh();addEventListener('resize',setVh);addEventListener('orientationchange',function(){setTimeout(setVh,300)});
   var N=2, track=document.getElementById('track'), dots=document.getElementById('dots');
   var file=document.getElementById('file'), toastEl=document.getElementById('toast');
